@@ -1,0 +1,327 @@
+ PYTHON PROGRAM TO MAKE A SIMPLE CALCULATOR
+print("Operation: +, -, *, /")
+select = input("Select operations: ")
+#get inputs
+num1 = float(input("Enter first number: "))
+num2 = float(input("Enter second number: "))
+# check operations and display result
+# add(+) two numbers
+if select == "+":
+print(num1, "+", num2, "=", num1+num2)
+# subtract (-) two numbers
+elif select == "-":
+ print(num1, "-", num2, "=", num1-num2)
+# multiply (*) two numbers
+elif select == "*":
+ print(num1, "*", num2, "=", num1*num2)
+# divide (/) one number by another
+elif select == "-":
+print(num1, "/", num2, "=", num1/num2)
+else:
+print ("Invalid input")
+////////////////////////////////////////////////////////////////
+#ARMSTRONG SERIES
+#Program to check Armstrong numbers in a certain interval
+lower = int(input("Enter the lower range : "))
+upper = int(input("Enter the upper range : "))
+for num in range(lower, upper + 1):
+ # order of number
+ order = len(str(num))
+#initialize sum
+ sum = 0
+ temp = num
+ while temp > 0:
+ digit = temp%10
+ sum+=digit**order
+ temp//=10
+ if num == sum:
+ print (num)
+///////////////////////////////////////////////////////////////
+# FIBONACCI SERIES
+# Program to display the Fibonacci sequence up to n-th term
+nterms = int(input("How many terms? "))
+# first two terms
+n1, n2 = 0, 1
+count = 0
+# check if the number of terms is valid
+if nterms <= 0:
+ print("Please enter a positive integer")
+# if there is only one term, return n1
+elif nterms == 1:
+ print("Fibonacci sequence upto",nterms,":")
+ print(n1)
+# generate fibonacci sequence
+else:
+ print("Fibonacci sequence:")
+ while count < nterms:
+ print(n1)
+ nth = n1 + n2
+ # update values
+ n1 = n2
+ n2 = nth
+ count += 1
+/////////////////////////////////////////////////////////////
+modules and functions
+def summation(a,b):
+ return a+b
+def multiplication(a,b):
+ return a*b
+def divide(a,b):
+ return a/b
+a = int(input("Enter the first number"))
+b = int(input("Enter the second number"))
+print("Sum = ",summation(a,b))
+print("Product = ",multiplication(a,b))
+print("Divisor = ",divide(a,b)
+////////////////////////////////////////////////////////////
+working with strings
+def Count(str):
+ alpha,upper,lower,number,special = 0,0,0,0,0
+ for i in range(len(str)):
+ if str[i].isalpha():
+ alpha += 1
+ 
+ if str[i].isupper():
+ upper += 1
+ elif str[i].islower():
+ lower +=1
+ elif str[i].isdigit():
+ number += 1
+ elif str[i]!=" ":
+ special += 1
+ print('Digits:', number)
+ print('Alphabets:', alpha)
+ print('Special characters:', special)
+ print('Lowercase:', lower)
+ print('Uppercase:', upper)
+str = input("Enter a string: ")
+Count(str)
+//////////////////////////////////////////////////////////////
+welcome matrix
+import math
+N, M = map(int, input("Enter N and M: ").split())
+for i in range(0,math.floor(N/2)):
+ s= '.|.'*i
+ print (s.rjust(math.floor((M-2)/2),'-
+')+'.|.'+('.|.'*i).ljust(math.floor((M-2)/2),'-'))
+print ('WELCOME'.center(M,'-'))
+for i in reversed(range(0,math.floor(N/2))):
+ s = '.|.'*i
+ print (s.rjust(math.floor((M-2)/2),'-
+')+'.|.'+('.|.'*i).ljust(math.floor((M-2)/2),'-'))
+//////////////////////////////////////////////////////////////
+data preprocessing
+import pandas as pd
+#import dataset
+df = pd.read_csv("/Heart.csv")
+df
+# Find the description of data in the data frame
+# Count the number of rows that are having no value from each column
+df.describe()
+# Print the number of columns, column labels, column data types from the
+data frame
+df.info()
+# Replace the value 0 with NAN
+df.replace(0,'NAN')
+# Remove the rows with the missing values
+df.dropna()
+# Impute the missing data with mean values
+df.fillna(df.mean())
+# Assign values to x excepting the last column
+x=df.iloc[:,0:14].values
+x
+#Assign values to y
+y=df.iloc[:,14].values
+y
+# Split the dataset into Training : Testing (80:20)
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size = 0.2, ran
+dom_state=0)
+print (x_train.shape)
+print (x_test.shape)
+/////////////////////////////////////////////////////////////////////////////////////////
+7.MANIPULATING THE TWITTER DATASET
+import pandas as pd
+import numpy as np
+import re
+data = pd.read_csv("/content/tweets1.csv")
+data
+def remove_pattern(input_txt, pattern):
+ r = re.findall(pattern,input_txt)
+ for i in r:
+ input_txt = re.sub(i,'',input_txt)
+ return input_txt
+print(data)
+data['new'] = np.vectorize(remove_pattern)(data ['text'],"@[\w]*")
+print(data)
+data['new'] = data['new'].str.replace("[^a-zA-Z#]"," ")
+print(data)
+data['new'] = data['new'].apply(lambda x:' '.join([w for w in x.split() if
+len(w) > 3]))
+print (data)
+tokenized_tweet = data['new'].apply (lambda x:x.split())
+print (tokenized_tweet.head())
+from nltk.stem import PorterStemmer
+stemmer = PorterStemmer()
+tokenized_tweet = tokenized_tweet.apply(lambda x:[stemmer.stem(i) for i in
+x])
+print (tokenized_tweet.head())
+////////////////////////////////////////////////////////////////////////////////////
+# EVALUATING THE RESULTS OF MACHINE LEARNING
+y=['0','1','0','1','1','1','0','1','0','1','0','0','0','1','1','1','0','1'
+,'1','0']
+y_pred = ['0','0','0','0','1','0','1','1','1','1','0','0','0','0','0','1',
+'0','1','1','0']
+print (y)
+print(y_pred)
+j=0
+TP,TN,FP,FN = 0,0,0,0
+for i in y:
+ if i == '1' and y_pred[j] =='1':
+ TP +=1
+ elif i == '0' and y_pred[j] =='0':
+ TN +=1
+ elif i == '1' and y_pred[j] =='0':
+ FP +=1
+ elif i == '0' and y_pred[j] =='1':
+ FN+=1
+ j+=1
+confusion_matrix = [TP,TN,FP,FN]
+print ("Confusion Matrix : ", confusion_matrix)
+ACC = (TP+TN) / (TP+FP+TN+FN)
+print ("ACCURACY : ", ACC)
+PREC = TP / (TP+FP)
+print ("PRECISION : ", PREC)
+REC = TP / (TP+FN)
+print ("RECALL : ", REC)
+SN = TP/ (TP+FN)
+print ("SENSITIVITY : ", SN)
+SP = TN/ (TN+FP)
+print ("SPECIFICITY : ", SP)
+MCE = 1-ACC
+print ("MISCLASSIFICATION ERROR : ", MCE)
+/////////////////////////////////////////////////////////////////////////////
+implementing linear regression
+experience = np.array([3.4,4.2,5.0,1.6,5.2,2.6,7.2,8.2,6.1,7.3,3.4,8.5,7.4,6.2,6.6])
+salary = np.array([3.1,5.7,4.2,2.3,5.3,2.4,7.6,6.4,6.5,7.4,3.5,9.3,8.2,4.6,7.2])
+
+plt.scatter(experience,salary,color='red')
+plt.xlabel("Experience")
+plt.ylabel("Salary")
+plt.show  
+
+a0 = 0 #intercept
+a1 = 0 #slope
+lr = 0.0001 #learning rate
+iterations = 1000 #Number of iterations
+error = [] #Error array to calculate cost for each iterations
+for itr in range(iterations):
+  error_cost = 0
+  cost_a0 = 0
+  cost_a1 = 0
+  for i in range(len(experience)):
+    y_pred = a0+a1*experience[i]  #predict value for given x
+    error_cost = error_cost + (salary[i]-y_pred)**2
+    for j in range(len(experience)):
+      partial_wrt_a0 = -2*(salary[j] -(a0 + a1 * experience[j]))
+  #partial derivative with respect to a0
+      partial_wrt_a1 = (-2*experience[j]) * (salary[j] –
+ (a0 + a1 * experience[j])) #partial derivative with respect to a1
+      cost_a0 = cost_a0 + partial_wrt_a0  
+#calculate cost for each number and add
+      cost_a1 = cost_a1 + partial_wrt_a1 
+ #calculate cost for each number and add
+    a0 = a0 - lr * cost_a0 #update a0
+    a1 = a1 - lr * cost_a1 #update a1
+    print (itr,a0,a1)  #check iteration and updated a0 and a1
+    error.append (error_cost)
+
+print (a0)
+print (a1)
+plt.figure(figsize=(10,5))
+plt.plot (np.arange(1,len(error)+1),error,color='red',linewidth=5)
+plt.title("Iteration Vs Error")
+plt.xlabel("Iterations")
+plt.ylabel("Error")
+
+pred = a0+a1 * experience
+print (pred)
+
+plt.scatter(experience,salary,color='red')
+plt.plot(experience,pred,color ='green')
+plt.xlabel('experience')
+plt.ylabel('salary')
+
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+experience = experience.reshape (-1,1)
+model = LinearRegression()
+model.fit(experience,salary)
+salary_pred = model.predict(experience)
+Mse = mean_squared_error(salary,salary_pred)
+print ("Slope", model.coef_)
+print ("Intercept", model.intercept_)
+print ("MSE", Mse)
+//////////////////////////////////////////////////////////////////////////////////
+10.IMPLEMENT CLASSIFICATION ALGORITHMS
+import pandas as pd
+import numpy as np
+from math import *
+df=pd.DataFrame()
+df['refund'] = ['yes','no','no','yes','no','no','yes','no','no','no']
+df['marital_status'] = ['single','married','married','single','single','divorced','married','single','single','married']
+df['taxable_income'] = [125000,100000,150000,250000,300000,350000,500000,180000,420000,275000]
+df['evade'] = ['no','no','no','no','yes','no','no','yes','no','yes']
+df
+for i in range(len(df)):
+  df.loc[i,'taxable_income'] = str(ceil(df.loc[i,'taxable_income']/100000))
+df
+data = pd.get_dummies(df[df.columns])
+data
+for i in range(1,4):
+  if ('taxable_income'+str(i) not in data.columns):
+    data['taxable_income'+str(i)] = [0 for i in range(10)]
+data
+x=['no','married',180000]
+x[2] = str(ceil(x[2]/100000))
+x
+//////////////////////////////////////////////////////////////////////////////////////
+11. IMPLEMENTING CLUSTERING USING K-MEANS CLUSTERING 
+ALGORITHM
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+df= pd.read_csv('/Mall_Customers.csv')
+df.head(3)
+len(df)
+X = df.iloc[:, [3,4]].values
+X[0:5]
+# KMeans class from the sklearn library.
+from sklearn.cluster import KMeans
+kmeans = KMeans(n_clusters=5, init ='kmeans++', max_iter=300, n_init=10, random_state=0 )
+kmeans.n_clusters
+y_kmeans = kmeans.fit_predict(X)
+df['cluster'] = y_kmeans
+print(y_kmeans.shape)
+# Visualising the clusters
+plt.scatter(X[y_kmeans==0, 0], X[y_kmeans==0, 1], s=100, c='red', label ='
+Cluster 1')
+plt.scatter(X[y_kmeans==1, 0], X[y_kmeans==1, 1], s=100, c='blue', label =
+'Cluster 2')
+plt.scatter(X[y_kmeans==2, 0], X[y_kmeans==2, 1], s=100, c='green', label
+='Cluster 3')
+plt.scatter(X[y_kmeans==3, 0], X[y_kmeans==3, 1], s=100, c='cyan', label =
+'Cluster 4')
+plt.scatter(X[y_kmeans==4, 0], X[y_kmeans==4, 1], s=100, c='magenta', labe
+l ='Cluster 5')
+#Plot the centroid. 
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1],
+s=300, c='yellow', label = 'Centroids')
+plt.title('Clusters of Customers')
+plt.xlabel('Annual Income(k$)')
+plt.ylabel('Spending Score(1-100)')
+plt.show()
+
+
+
+
